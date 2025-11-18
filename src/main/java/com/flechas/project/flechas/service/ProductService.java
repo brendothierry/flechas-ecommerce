@@ -1,35 +1,35 @@
 package com.flechas.project.flechas.service;
 
-import com.flechas.project.flechas.model.Produto;
-import com.flechas.project.flechas.repository.ProdutoRepository;
+import com.flechas.project.flechas.model.Product;
+import com.flechas.project.flechas.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ProdutoService {
+public class ProductService {
 
-    private final ProdutoRepository repository;
+    private final ProductRepository repository;
 
-    public ProdutoService(ProdutoRepository repository) {
+    public ProductService(ProductRepository repository) {
         this.repository = repository;
     }
 
-    public List<Produto> listarTodos() {
+    public List<Product> listAll() {
         return repository.findAll();
     }
 
-    public Produto buscarPorId(Long id) {
+    public Product getById(Long id) {
         return repository.findById(id).orElseThrow(() ->
                 new RuntimeException("Produto não encontrado!"));
     }
 
-    public Produto salvar(Produto produto) {
+    public Product save(Product produto) {
         return repository.save(produto);
     }
 
-    public Produto atualizar(Long id, Produto produtoAtualizado) {
-        Produto existente = buscarPorId(id);
+    public Product update(Long id, Product produtoAtualizado) {
+        Product existente = getById(id);
         existente.setNome(produtoAtualizado.getNome());
         existente.setPreco(produtoAtualizado.getPreco());
         existente.setEstoque(produtoAtualizado.getEstoque());
@@ -38,7 +38,7 @@ public class ProdutoService {
         return repository.save(existente);
     }
 
-    public void deletar(Long id) {
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 }
